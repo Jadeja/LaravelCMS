@@ -3,11 +3,28 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
     //
-    protected $fillable = [ 'body','category_id','photo_id','title'];
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+            ]                          
+        ];
+    }
+
+    protected $fillable = [ 'body','category_id','photo_id','title','slug'];
 
 
 
@@ -26,4 +43,8 @@ class Post extends Model
     	return $this->belongsTo('App\Category');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

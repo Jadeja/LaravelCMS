@@ -8,6 +8,8 @@ use App\Photo;
 use App\Category;
 use App\Http\Requests\PostsCreateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class AdminPostsController extends Controller
 {
@@ -19,7 +21,7 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
-        $posts =  Post::all();
+        $posts =  Post::paginate(2);
         return view("admin.posts.index",compact('posts'));
     }
 
@@ -82,7 +84,9 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
-        return view("admin.posts.edit");        
+        $post = Post::findOrFail($id);
+        $categories = Category::pluck('name','id')->all();
+        return view("admin.posts.edit",compact('post','categories'));        
     }
 
     /**
@@ -94,7 +98,20 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $input = $request->all();
+        //$user  = findOrFail($id);
+
+        if($file = $request->file('photo_id'))
+        {
+            $name  = time() . $file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['file' => $name ]);
+            $input['photo_id']  = $photo->id;
+        }
+
+        Auth::user()->posts()->whereId($id)->first()->update($input);
+        return redirect('/admin/posts/');
     }
 
     /**
@@ -102,9 +119,25 @@ class AdminPostsController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function destroy($id)
     {
         //
+        $post = Post::findOrFail($id);
+
+        unlink(public_path().$post->photo->file);
+
+        $post->delete();
+
+        Session::flash('post_deleted','Post deleted');
+        return redirect('/admin/posts');
+    }
+
+
+    public function post($slug)
+    {
+        $post       = Post::whereSlug($slug)->firstOrFail();        
+        $comments   = $post->comments()->where('IsActive',1)->get();
+        return view('post',compact('post','comments')); 
     }
 }

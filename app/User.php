@@ -48,11 +48,20 @@ class User extends Authenticatable
         return false;
     }
 
-    public function setPasswordAttribute($password)
+/*    public function setPasswordAttribute($password)
     {
         if(!empty($password)){
             $this->attributes['password'] = bcrypt($password);
         }
+    }
+*/
+    public function getGravatarAttribute()
+    {
+        
+        //$hash = md5(strtolower(trim($this->attributes['email'])));
+        $hash = md5('edwin@codingfaculty.com');
+
+        return "http://www.gravatar.com/avatar/$hash";
     }
 
     public function posts()
