@@ -1,13 +1,16 @@
-<script src="https://cdn.tiny.cloud/1/sddbugydk2ys9v0o0fk9la6i7xywz61hdnphi2mi1w6niqpm/tinymce/5/tinymce.min.js"></script>
+ <script src="https://cdn.tiny.cloud/1/sddbugydk2ys9v0o0fk9la6i7xywz61hdnphi2mi1w6niqpm/tinymce/4/tinymce.min.js"></script> 
+<!--<script src="https://cloud.tinymce.com/4/tinymce.min.js"></script>
+<script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>-->
+
 <script>
   var editor_config = {
     path_absolute : "/",
-    selector: "textarea",
+    selector: "textarea.my-editor",
     plugins: [
       "advlist autolink lists link image charmap print preview hr anchor pagebreak",
       "searchreplace wordcount visualblocks visualchars code fullscreen",
-      "insertdatetime media nonbreaking save table contextmenu directionality",
-      "emoticons template paste textcolor colorpicker textpattern"
+      "insertdatetime media nonbreaking save table directionality",
+      "emoticons template paste textpattern"
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
     relative_urls: false,

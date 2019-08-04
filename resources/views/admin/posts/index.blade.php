@@ -19,7 +19,6 @@
         <th>Id</th>
         <th>Photo</th>        
         <th>Name</th>
-        <th>Body</th>
         <th>Owner</th>
         <th>Category</th>
         <th>View Post</th>
@@ -34,7 +33,6 @@
             <td>{{ $u->id}}</td>
            <td><img height="50" src="{{ $u->photo? $u->photo->file:'http://placehold.it/400x400'}}"></td>            
             <td><a href="{{route('admin.posts.edit',$u->id)}}">{{ $u->title}}</a></td>
-            <td>{{ str_limit($u->body,10)}}</td>
             <td>{{ $u->user->name}}</td>
             <td>{{ $u->category ? $u->category->name : 'Not Available'}}</td>
             <td><a href="{{ route('home.post',$u->slug)}}" >View Post</a></td>

@@ -155,7 +155,8 @@
     <!-- jQuery -->
     <script src="{{asset('js/libs.js')}}"></script>
     @yield('scripts')                
-
+<script id="dsq-count-scr" src="//testblogapp-1.disqus.com/count.js" async></script>
+https://127.0.0.1:8000
 </body>
 
 </html>
